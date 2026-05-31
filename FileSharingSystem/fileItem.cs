@@ -115,7 +115,8 @@ namespace FileSharingSystem
         }
 
         // Метод 3: AddTag
-        // addTag(tag_id): void
+        // addTag(tag_id): void 
+
         public void AddTag(Tag tag)
         {
             // Обробка виняткових ситуацій: null-аргумент
