@@ -1,59 +1,5 @@
-# Node.js dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Build output
-dist/
-build/
-out/
-tmp/
-temp/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-logs
-*.log
-*.log.*
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# IDE / Editor settings
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-# Test coverage
-coverage/
-.nyc_output/
-
-# Cache
-.cache/
-.parcel-cache/
-.next/
-.nuxt/
-.svelte-kit/
-vite.config.ts.timestamp-*
-
-# Misc
-*.tgz
-*.zip
-# Created by https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudio,visualstudiocode,test
-# Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore,visualstudio,visualstudiocode,test
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,dotnetcore
 
 ### DotnetCore ###
 # .NET Core build folders
@@ -63,86 +9,6 @@ obj/
 # Common node modules locations
 /node_modules
 /wwwroot/node_modules
-
-### Test ###
-### Ignore all files that could be used to test your code and
-### you wouldn't want to push
-
-# Reference https://en.wikipedia.org/wiki/Metasyntactic_variable
-
-# Most common
-*foo
-*bar
-*fubar
-*foobar
-*baz
-
-# Less common
-*qux
-*quux
-*bongo
-*bazola
-*ztesch
-
-# UK, Australia
-*wibble
-*wobble
-*wubble
-*flob
-*blep
-*blah
-*boop
-*beep
-
-# Japanese
-*hoge
-*piyo
-*fuga
-*hogera
-*hogehoge
-
-# Portugal, Spain
-*fulano
-*sicrano
-*beltrano
-*mengano
-*perengano
-*zutano
-
-# France, Italy, the Netherlands
-*toto
-*titi
-*tata
-*tutu
-*pipppo
-*pluto
-*paperino
-*aap
-*noot
-*mies
-
-# Other names that would make sense
-*tests
-*testsdir
-*testsfile
-*testsfiles
-*test
-*testdir
-*testfile
-*testfiles
-*testing
-*testingdir
-*testingfile
-*testingfiles
-*temp
-*tempdir
-*tempfile
-*tempfiles
-*tmp
-*tmpdir
-*tmpfile
-*tmpfiles
-*lol
 
 ### VisualStudioCode ###
 .vscode/*
@@ -558,4 +424,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/dotnetcore,visualstudio,visualstudiocode,test
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore
