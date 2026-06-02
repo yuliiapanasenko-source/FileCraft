@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="FileSharingSystem.Tests/FileSharingSystem.Tests.csproj" />
-  <Project Path="FileSharingSystem/FileSharingSystem.csproj" />
-</Solution>
