@@ -139,7 +139,7 @@ namespace FileSharingSystem.Tests
 
             // Assert
             Assert.IsFalse(file.IsPublic);
-            Assert.IsNull(url);
+            Assert.IsEmpty(url);
         }
 
         // ── ТЕСТ 11 ─────────────────────────────────────────────────
