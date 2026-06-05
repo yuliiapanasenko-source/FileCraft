@@ -28,6 +28,7 @@ namespace FileSharingSystem
             { ".pdf", ".png", ".jpg", ".jpeg", ".docx", ".txt" };
 
         private readonly string ShareBaseUrl;
+        public FileItem() { }
         public FileItem(string shareBaseUrl, string fileName, string shareUrl)
         {
             ShareBaseUrl = shareBaseUrl;

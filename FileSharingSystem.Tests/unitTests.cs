@@ -26,7 +26,7 @@ namespace FileSharingSystem.Tests
         [TestCase("", typeof(ArgumentException))]
         [TestCase("   ", typeof(ArgumentException))]
         public void Upload_InvalidFileData_ThrowsExpectedException(
-            string fileData, Type expectedException)
+            string? fileData, Type expectedException)
         {
             // Arrange
             FileItem file = CreateValidFileItem();
