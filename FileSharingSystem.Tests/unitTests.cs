@@ -6,60 +6,33 @@ namespace FileSharingSystem.Tests
 {
     public class FileItemTests
     {
-        // ==================== Upload(file_data) ====================
+        private const int DefaultFileId = 1;
+        private const int DefaultUserId = 10;
 
-        // ── ТЕСТ 1 ──────────────────────────────────────────────────
-        // Техніка: EP / негативний
-        // Клас еквівалентності: file_data = null → ArgumentNullException
-        [Test]
-        public void Upload_NullData_ThrowsArgumentNullException()
+        private const string ValidPdfFileName = "document.pdf";
+        private const string ValidPngFileName = "photo.png";
+        private const string InvalidFileName = "virus.exe";
+        private const string ValidFileData = "VALID_FILE_DATA";
+
+        private FileItem CreateValidFileItem(string fileName = ValidPdfFileName)
+            => new FileItem
+            {
+                FileId = DefaultFileId,
+                UserId = DefaultUserId,
+                FileName = fileName
+            };
+        // Покриває колишні тести 1, 2, 3.
+        [TestCase(null, typeof(ArgumentNullException))]
+        [TestCase("", typeof(ArgumentException))]
+        [TestCase("   ", typeof(ArgumentException))]
+        public void Upload_InvalidFileData_ThrowsExpectedException(
+            string fileData, Type expectedException)
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 1,
-                UserId   = 10,
-                FileName = "document.pdf"
-            };
+            FileItem file = CreateValidFileItem();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => file.Upload(null));
-        }
-
-        // ── ТЕСТ 2 ──────────────────────────────────────────────────
-        // Техніка: EP / негативний
-        // Клас еквівалентності: file_data = "" → ArgumentException
-        [Test]
-        public void Upload_EmptyData_ThrowsArgumentException()
-        {
-            // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 2,
-                UserId   = 10,
-                FileName = "document.pdf"
-            };
-
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => file.Upload(""));
-        }
-
-        // ── ТЕСТ 3 ──────────────────────────────────────────────────
-        // Техніка: BVA / негативний
-        // Гранична умова: file_data складається лише з пробілів → ArgumentException
-        [Test]
-        public void Upload_WhitespaceData_ThrowsArgumentException()
-        {
-            // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 3,
-                UserId   = 10,
-                FileName = "document.pdf"
-            };
-
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => file.Upload("   "));
+            Assert.Throws(expectedException, () => file.Upload(fileData));
         }
 
         // ── ТЕСТ 4 ──────────────────────────────────────────────────
@@ -69,15 +42,10 @@ namespace FileSharingSystem.Tests
         public void Upload_EmptyFileName_ThrowsInvalidOperationException()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 4,
-                UserId   = 10,
-                FileName = ""
-            };
+            FileItem file = CreateValidFileItem(fileName: "");
 
             // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => file.Upload("DATA"));
+            Assert.Throws<InvalidOperationException>(() => file.Upload(ValidFileData));
         }
 
         // ── ТЕСТ 5 ──────────────────────────────────────────────────
@@ -87,15 +55,10 @@ namespace FileSharingSystem.Tests
         public void Upload_InvalidExtension_ThrowsInvalidOperationException()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 5,
-                UserId   = 10,
-                FileName = "virus.exe"
-            };
+            FileItem file = CreateValidFileItem(fileName: InvalidFileName);
 
             // Act & Assert
-            Assert.Throws<InvalidOperationException>(() => file.Upload("DATA"));
+            Assert.Throws<InvalidOperationException>(() => file.Upload(ValidFileData));
         }
 
         // ── ТЕСТ 6 ──────────────────────────────────────────────────
@@ -105,15 +68,10 @@ namespace FileSharingSystem.Tests
         public void Upload_ValidPdfFile_ReturnsFileItemAndCreatesReport()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 1,
-                UserId   = 10,
-                FileName = "document.pdf"
-            };
+            FileItem file = CreateValidFileItem(ValidPdfFileName);
 
             // Act
-            FileItem result = file.Upload("PDF DATA");
+            FileItem result = file.Upload(ValidFileData);
 
             // Assert
             Assert.IsNotNull(result);
@@ -127,22 +85,15 @@ namespace FileSharingSystem.Tests
         public void Upload_ValidPngFile_ReturnsFileItemAndCreatesReport()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 2,
-                UserId   = 5,
-                FileName = "photo.png"
-            };
+            FileItem file = CreateValidFileItem(ValidPngFileName);
 
             // Act
-            FileItem result = file.Upload("IMG DATA");
+            FileItem result = file.Upload(ValidFileData);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(1, file.Reports.Count);
         }
-
-        // ==================== TogglePublic(status) ====================
 
         // ── ТЕСТ 8 ──────────────────────────────────────────────────
         // Техніка: EP / негативний
@@ -151,12 +102,7 @@ namespace FileSharingSystem.Tests
         public void TogglePublic_EmptyFileName_ThrowsInvalidOperationException()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 1,
-                UserId   = 10,
-                FileName = ""
-            };
+            FileItem file = CreateValidFileItem(fileName: "");
 
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => file.TogglePublic(true));
@@ -169,12 +115,7 @@ namespace FileSharingSystem.Tests
         public void TogglePublic_True_SetsIsPublicAndReturnsUrl()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 2,
-                UserId   = 5,
-                FileName = "photo.png"
-            };
+            FileItem file = CreateValidFileItem(ValidPngFileName);
 
             // Act
             string url = file.TogglePublic(true);
@@ -191,12 +132,7 @@ namespace FileSharingSystem.Tests
         public void TogglePublic_False_SetsIsPublicFalseAndReturnsNull()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 2,
-                UserId   = 5,
-                FileName = "photo.png"
-            };
+            FileItem file = CreateValidFileItem(ValidPngFileName);
 
             // Act
             string url = file.TogglePublic(false);
@@ -213,19 +149,16 @@ namespace FileSharingSystem.Tests
         public void TogglePublic_FileNameWithSpecialChars_UrlContainsSanitizedName()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 3,
-                UserId   = 7,
-                FileName = "my file!.pdf"
-            };
+            FileItem file = CreateValidFileItem(fileName: "my file!.pdf");
+
+            string expectedSanitizedName = "my_file_.pdf";
 
             // Act
             string url = file.TogglePublic(true);
 
             // Assert
             Assert.IsNotNull(url);
-            Assert.IsTrue(url.Contains("my_file_.pdf"));
+            Assert.IsTrue(url.Contains(expectedSanitizedName));
         }
 
         // ── ТЕСТ 12 ─────────────────────────────────────────────────
@@ -235,19 +168,14 @@ namespace FileSharingSystem.Tests
         public void TogglePublic_FileNameWithAllowedCharsOnly_UrlContainsOriginalName()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId   = 4,
-                UserId   = 7,
-                FileName = "photo.png"
-            };
+            FileItem file = CreateValidFileItem(ValidPngFileName);
 
             // Act
             string url = file.TogglePublic(true);
 
             // Assert
             Assert.IsNotNull(url);
-            Assert.IsTrue(url.Contains("photo.png"));
+            Assert.IsTrue(url.Contains(ValidPngFileName));
         }
 
         // ==================== AddTag(tag_id) ====================
@@ -259,11 +187,7 @@ namespace FileSharingSystem.Tests
         public void AddTag_NullTag_ThrowsArgumentNullException()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId = 1,
-                UserId = 10
-            };
+            FileItem file = CreateValidFileItem();
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => file.AddTag(null));
@@ -276,11 +200,7 @@ namespace FileSharingSystem.Tests
         public void AddTag_EmptyLabel_ThrowsArgumentException()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId = 1,
-                UserId = 10
-            };
+            FileItem file = CreateValidFileItem();
             Tag tag = new Tag { TagId = 1, Label = "" };
 
             // Act & Assert
@@ -294,11 +214,7 @@ namespace FileSharingSystem.Tests
         public void AddTag_FirstTag_TagsCountEqualsOne()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId = 1,
-                UserId = 10
-            };
+            FileItem file = CreateValidFileItem();
             Tag tag = new Tag { TagId = 1, Label = "Навчання" };
 
             // Act
@@ -315,11 +231,7 @@ namespace FileSharingSystem.Tests
         public void AddTag_DuplicateTagId_TagsCountRemainsOne()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId = 1,
-                UserId = 10
-            };
+            FileItem file = CreateValidFileItem();
             Tag tag = new Tag { TagId = 1, Label = "Навчання" };
 
             // Act
@@ -337,11 +249,7 @@ namespace FileSharingSystem.Tests
         public void AddTag_TwoDifferentTags_TagsCountEqualsTwo()
         {
             // Arrange
-            FileItem file = new FileItem
-            {
-                FileId = 1,
-                UserId = 10
-            };
+            FileItem file = CreateValidFileItem();
             Tag tag1 = new Tag { TagId = 1, Label = "Навчання" };
             Tag tag2 = new Tag { TagId = 2, Label = "Робота" };
 
