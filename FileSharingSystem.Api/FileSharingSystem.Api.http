@@ -1,6 +1,0 @@
-@FileSharingSystem.Api_HostAddress = http://localhost:5049
-
-GET {{FileSharingSystem.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,6 +1,5 @@
 <Solution>
   <Project Path="FileCraftAPI/FileCraftAPI.csproj" Id="d4e892bd-1c96-4d05-8fb6-3ed0ee2eacbe" />
-  <Project Path="FileSharingSystem.Api/FileSharingSystem.Api.csproj" />
   <Project Path="FileSharingSystem.Tests/FileSharingSystem.Tests.csproj" />
   <Project Path="FileSharingSystem/FileSharingSystem.csproj" />
 </Solution>
