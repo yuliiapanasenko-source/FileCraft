@@ -1,0 +1,6 @@
+@FileCraftAPI_HostAddress = http://localhost:5252
+
+GET {{FileCraftAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
